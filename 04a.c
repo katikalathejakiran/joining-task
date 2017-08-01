@@ -5,14 +5,19 @@
 #include <time.h>
 
 
-int main(void){
+int main(void) {
     int blocksize;
     long int blockcount;
     FILE *file;
+    double time_spent;
+    clock_t begin,end;
+    void *buff;
+    
     printf("enter block size and block count:");
     scanf("%d %ld", &blocksize, &blockcount);
-    void *buff = calloc(blocksize,sizeof(char));
-    double time_spent;
+    
+    buff = calloc(blocksize,sizeof(char));
+   
 
     file = fopen("test.txt","w");
 
@@ -21,16 +26,18 @@ int main(void){
       return EXIT_FAILURE;
     }
 
-    clock_t begin = clock();
+    begin = clock();
 
     while(blockcount){
       fwrite(buff, 1, blocksize, file);
       blockcount--;
     }
 
-    clock_t end = clock();
+    end = clock();
     time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    
     printf("Execution Time:%f\n",time_spent);
+    
     return EXIT_SUCCESS;
 
 }
