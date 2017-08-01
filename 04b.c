@@ -10,9 +10,12 @@ int main(){
   int fd,blocksize;
   long int blockcount;
   double time_spent;
+  void * buff;
+  clock_t begin, end;
+  
   printf("Enter blockSize and blockcount:");
   scanf("%d %ld", &blocksize, &blockcount);
-  void * buff=malloc(blocksize*sizeof(char));
+  buff = malloc(blocksize*sizeof(char));
 
   fd = open("test.txt", MODE, PERMISSION);
 
@@ -21,14 +24,14 @@ int main(){
     return EXIT_FAILURE;
   }
 
-  clock_t begin = clock();
+  begin = clock();
 
   while (blockcount){
     write(fd,buff,blocksize);
     blockcount--;
   }
 
-  clock_t end = clock();
+  end = clock();
   time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
   printf("Executable Time(low level i/o) : %f",time_spent);
 
